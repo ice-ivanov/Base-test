@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+# from .routing import application
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -35,8 +36,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-ASGI_APPLICATION = 'app.routing.application'
 
 ROOT_URLCONF = 'app.urls'
 
@@ -109,3 +108,11 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
+
+ASGI_APPLICATION = 'app.routing.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}

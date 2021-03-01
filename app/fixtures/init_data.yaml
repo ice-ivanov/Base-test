@@ -1,0 +1,61 @@
+# Subjects
+
+- model: chat.subject
+  pk: 1
+  fields:
+    name: math
+- model: chat.subject
+  pk: 2
+  fields:
+    name: russian-lang
+- model: chat.subject
+  pk: 3
+  fields:
+    name: social-sci
+
+# User roles
+
+- model: custom_auth.userrole
+  pk: 1
+  fields:
+    name: manager
+- model: custom_auth.userrole
+  pk: 2
+  fields:
+    name: student
+
+# Users
+
+- model: custom_auth.user
+  pk: 1
+  fields:
+    username: admin
+    email: some1@email.com
+    notifications: true
+    role: [1,2]
+    subject: [1,2]
+    password: 1234
+    is_superuser: true
+    is_staff: true
+- model: custom_auth.user
+  pk: 2
+  fields:
+    username: user2
+    email: some2@email.com
+    notifications: true
+    role: [1]
+    subject: [1]
+    password: 1234
+    is_superuser: false
+    is_staff: true
+- model: custom_auth.user
+  pk: 3
+  fields:
+    username: user3
+    email: some3@email.com
+    notifications: false
+    role: [1]
+    subject: [1,2]
+    password: 1234
+    is_superuser: false
+    is_staff: false

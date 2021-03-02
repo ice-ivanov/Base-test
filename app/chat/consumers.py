@@ -8,6 +8,7 @@ from channels.generic.websocket import WebsocketConsumer
 from channels.layers import get_channel_layer
 from custom_auth.models import UserRole
 from django.contrib.auth import get_user_model
+from chat.models import Subject
 
 User = get_user_model()
 
@@ -45,8 +46,26 @@ class ChatConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
+        subject = text_data_json['subject']
 
+        self._select_user_type(message, subject)
+
+    def _select_user_type(self, message, subject):
         # Send message to room group
+        print('Now select users to send to!')
+        print(self.channel_layer.__dict__)
+        print(self.__dict__)
+        print(self.user.role.all())
+        all_roles = list(UserRole.objects.all())
+        user_roles = list(self.user.role.all())
+        # TODO: Make a proper query
+        manager = all_roles[0]
+        user = all_roles[1]
+        if user in user_roles:
+            print('User asking question!')
+            self._manager_notify(subject)
+        # if
+
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {
@@ -54,6 +73,11 @@ class ChatConsumer(WebsocketConsumer):
                 'message': message
             }
         )
+
+    def _manager_notify(self, subject):
+        subject_obj = Subject.objects.filter(name=subject)
+        print(subject_obj)
+        # managers = User.objects
 
     # Receive message from room group
     def chat_message(self, event):

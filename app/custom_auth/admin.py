@@ -10,7 +10,7 @@ class UserRoleAdmin(admin.ModelAdmin):
 
 class UserAdmin(BaseUserAdmin):
     fieldsets = (
-        ('Personal info', {'fields': ('id', 'username', 'role', 'notifications')}),
+        ('Personal info', {'fields': ('id', 'username', 'roles', 'subjects', 'notifications')}),
         ('Permissions', {'fields': ('is_active', 'is_superuser', 'is_staff')}),
     )
     readonly_fields = ('id',)

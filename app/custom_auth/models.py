@@ -51,8 +51,8 @@ class User(AbstractUser):
     """
     Custom user model.
     """
-    role = models.ManyToManyField(UserRole, null=True, blank=True)
-    subject = models.ManyToManyField(Subject, null=True, blank=True)
+    roles = models.ManyToManyField(UserRole, blank=True, related_name='roles')
+    subjects = models.ManyToManyField(Subject, blank=True, related_name='subjects')
     notifications = models.BooleanField(default=0)
     email = models.EmailField(blank=True)
     objects = UserManager()

@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
-from chat.models import Subject
 
 
 class UserManager(BaseUserManager):
@@ -52,7 +51,6 @@ class User(AbstractUser):
     Custom user model.
     """
     roles = models.ManyToManyField(UserRole, blank=True, related_name='roles')
-    subjects = models.ManyToManyField(Subject, blank=True, related_name='subjects')
     notifications = models.BooleanField(default=0)
     email = models.EmailField(blank=True)
     objects = UserManager()

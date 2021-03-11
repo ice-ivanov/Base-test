@@ -109,10 +109,13 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-ASGI_APPLICATION = 'app.routing.application'
-
+# Channels
+ASGI_APPLICATION = 'app.asgi.application'
 CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
-    }
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('redis', 6379)],
+        },
+    },
 }

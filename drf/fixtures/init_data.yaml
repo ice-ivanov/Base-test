@@ -1,18 +1,3 @@
-# Subjects
-
-- model: chat.subject
-  pk: 1
-  fields:
-    name: math
-- model: chat.subject
-  pk: 2
-  fields:
-    name: russian-lang
-- model: chat.subject
-  pk: 3
-  fields:
-    name: social-sci
-
 # User roles
 
 - model: custom_auth.userrole

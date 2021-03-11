@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-# from .routing import application
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -37,7 +36,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'app.urls'
+ROOT_URLCONF = 'drf.urls'
 
 FIXTURE_DIRS = ('fixtures',)
 
@@ -110,7 +109,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 # Channels
-ASGI_APPLICATION = 'app.asgi.application'
+ASGI_APPLICATION = 'drf.asgi.application'
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',

@@ -6,7 +6,7 @@ RUN python -m pip install --upgrade pip
 RUN apk add gcc musl-dev python3-dev libffi-dev openssl-dev cargo
 
 # set work directory
-WORKDIR /usr/src/app
+WORKDIR /usr/src/drf
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1

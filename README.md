@@ -19,3 +19,6 @@ Default credentials: <br>
 >Connect: <br>
 `docker exec -it albert-test_redis_1 sh` <br>
 `redis-cli`
+<hr>
+
+****TODO: Make tests***

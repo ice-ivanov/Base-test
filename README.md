@@ -14,6 +14,12 @@ Default credentials: <br>
 *Password: 1234* <br>
 <hr>
 
+
+# React
+****TODO: Add front representation of users and channels***
+>Front: http://localhost:3000/ <br>
+<hr>
+
 # Redis
 ****TODO: Make sure redis stores data***
 >Connect: <br>

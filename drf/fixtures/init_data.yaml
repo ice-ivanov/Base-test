@@ -3,11 +3,11 @@
 - model: custom_auth.userrole
   pk: 1
   fields:
-    name: manager
+    name: moderator
 - model: custom_auth.userrole
   pk: 2
   fields:
-    name: student
+    name: user
 
 # Users
 
@@ -17,8 +17,7 @@
     username: admin
     email: some1@email.com
     notifications: true
-    role: [1,2]
-    subject: [1,2]
+    roles: [1,2]
     password: 1234
     is_superuser: true
     is_staff: true
@@ -28,19 +27,7 @@
     username: user2
     email: some2@email.com
     notifications: true
-    role: [1]
-    subject: [1]
+    roles: [1]
     password: 1234
     is_superuser: false
     is_staff: true
-- model: custom_auth.user
-  pk: 3
-  fields:
-    username: user3
-    email: some3@email.com
-    notifications: false
-    role: [1]
-    subject: [1,2]
-    password: 1234
-    is_superuser: false
-    is_staff: false

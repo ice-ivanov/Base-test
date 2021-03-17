@@ -36,11 +36,7 @@ class UserManager(BaseUserManager):
 
 
 class UserRole(models.Model):
-    ROLE_NAME_CHOICES = [
-        ('manager', "Manager"),
-        ('student', "Student"),
-    ]
-    name = models.CharField(max_length=100, choices=ROLE_NAME_CHOICES)
+    name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name

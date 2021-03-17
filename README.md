@@ -1,7 +1,6 @@
 # Initial setup
 
->`docker-compose build`<br>
-`docker-compose up`<br>
+>`docker-compose up --build`<br>
 `docker-compose exec drf python manage.py init_setup`
 <hr>
 
@@ -13,7 +12,6 @@ Default credentials: <br>
 *Username: admin* <br>
 *Password: 1234* <br>
 <hr>
-
 
 # React
 ****TODO: Add front representation of users and channels***

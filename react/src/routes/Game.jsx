@@ -1,11 +1,11 @@
 import React from 'react';
 import './main.css';
 
-class Main2 extends React.Component {
+class Game extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            color: 'grey'
+            color: 'blue'
         }
     }
 
@@ -16,6 +16,7 @@ class Main2 extends React.Component {
     render() {
         const {roles, title, loading} = this.props;
         return(
+            <h1>Some front end happening in this area</>
             <div className="main-wrapper">
                 <h1 className={`header-h ${title ? 'fulled' : ''}`}>
                     {title ? title : 'No'}
@@ -31,4 +32,4 @@ class Main2 extends React.Component {
     }
 }
 
-export default Main2;
+export default Game;

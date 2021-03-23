@@ -1,4 +1,5 @@
 import React from 'react';
+import './main.css';
 
 class Main extends React.Component {
   constructor(props) {
@@ -13,15 +14,17 @@ class Main extends React.Component {
   };
 
   render() {
-    const {users, title} = this.props;
+    const {roles, title, loading} = this.props;
     return(
       <div className="main-wrapper">
         <h1 className={`header-h ${title ? 'fulled' : ''}`}>
           {title ? title : 'No'}
         </h1>
-        <span onClick={() => this.changeColor()}>Change Color</span>
+        <span style={{color: this.state.color}} onClick={() => this.changeColor()}>Change Color</span>
+        <span> {loading ? 'loading' : ''}
+        </span>
         <ul style={{color: this.state.color}}>
-          {users.map(user => <li key={user.id}>{user.name}</li>)}
+          {roles.map(role => <li key={role.id}>{role.name}</li>)}
         </ul>
       </div>
     )

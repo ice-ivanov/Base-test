@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
 
+from celery.schedules import crontab
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
@@ -22,6 +24,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'channels',
+    'django_celery_beat',
+    'django_celery_results',
     # Apps
     'custom_auth',
     'chat',
@@ -121,5 +125,15 @@ CHANNEL_LAYERS = {
         'CONFIG': {
             "hosts": [('redis', 6379)],
         },
+    },
+}
+
+# Celery config
+CELERY_BROKER_URL= 'pyamqp://rabbitmq:5672'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_BEAT_SCHEDULE = {
+    'queue_every_five_mins': {
+        'task': 'polls.tasks.query_every_five_mins',
+        'schedule': crontab(minute=5),
     },
 }

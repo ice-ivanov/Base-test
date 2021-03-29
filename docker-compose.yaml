@@ -35,6 +35,41 @@ services:
     depends_on:
       - drf
 
+  celery_worker:
+    command: sh -c "wait-for redis:3000 && wait-for drf:8000 -- celery -A mysite worker -l info"
+    depends_on:
+      - drf
+      - db
+      - redis
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 50M
+        reservations:
+          cpus: '0.25'
+          memory: 20M
+    hostname: celery_worker
+    image: app-image
+    networks:
+      - net1
+    restart: on-failure
+
+  celery_beat:
+    command: sh -c "wait-for redis:3000 && wait-for drf:8000 -- celery -A mysite beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler"
+    depends_on:
+      - drf
+      - db
+      - redis
+    hostname: celery_beat
+    image: app-image
+    networks:
+      - net1
+    restart: on-failure
+
   react:
     build:
       context: ./react
@@ -53,3 +88,6 @@ volumes:
   postgres_data:
   redis:
   react:
+
+networks:
+  net1:

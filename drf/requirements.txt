@@ -5,3 +5,5 @@ psycopg2_binary==2.8.6
 pyyaml==5.4.1
 channels==3.0.3
 channels_redis==3.2.0
+celery==4.2.1
+redis==2.10.6

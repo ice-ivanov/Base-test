@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     # Apps
     'custom_auth',
     'chat',
+    # 'polls',
 ]
 
 MIDDLEWARE = [
@@ -128,12 +129,15 @@ CHANNEL_LAYERS = {
     },
 }
 
-# Celery config
-CELERY_BROKER_URL= 'pyamqp://rabbitmq:5672'
-CELERY_RESULT_BACKEND = 'django-db'
+# broker_url = 'redis://redis:6379'
+broker_url = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 CELERY_BEAT_SCHEDULE = {
-    'queue_every_five_mins': {
-        'task': 'polls.tasks.query_every_five_mins',
-        'schedule': crontab(minute=5),
-    },
+    'hello': {
+        'task': 'chat.tasks.hello',
+        'schedule': crontab()  # execute every minute
+    }
 }

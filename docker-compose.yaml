@@ -16,6 +16,8 @@ services:
       - ./.env.dev
     depends_on:
       - db
+    networks:
+      - net_1
 
   db:
     image: postgres:12.0-alpine
@@ -25,50 +27,62 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=base_test
+    networks:
+      - net_1
 
   redis:
     image: redis:alpine
     volumes:
       - redis:/data
-    ports:
-      - "6379:6379"
+#    ports:
+#      - "6379:6379"
     depends_on:
       - drf
+    networks:
+      - net_1
 
-#  celery_worker:
-#    command: sh -c "wait-for redis:3000 && wait-for drf:8000 -- celery -A base-test worker -l info"
-#    depends_on:
-#      - drf
-#      - db
-#      - redis
-#    deploy:
-#      replicas: 2
-#      restart_policy:
-#        condition: on-failure
-#      resources:
-#        limits:
-#          cpus: '0.50'
-#          memory: 50M
-#        reservations:
-#          cpus: '0.25'
-#          memory: 20M
-#    hostname: celery_worker
-#    image: app-image
+#  rabbitmq:
+#    image: rabbitmq:3-management-alpine
+#    ports:
+#      - 5672:5672
+#      - 15672:15672
 #    networks:
-#      - main
-#    restart: on-failure
+#      - net_1
 
-#  celery_beat:
-#    command: sh -c "wait-for redis:3000 && wait-for drf:8000 -- celery -A mysite beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler"
-#    depends_on:
-#      - drf
-#      - db
-#      - redis
-#    hostname: celery_beat
-#    image: app-image
-#    networks:
-#      - main
-#    restart: on-failure
+  celery_worker:
+    command: sh -c "wait-for redis:3000 && wait-for drf:8000 -- celery -A base-test worker -l info"
+    depends_on:
+      - drf
+      - db
+      - redis
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 50M
+        reservations:
+          cpus: '0.25'
+          memory: 20M
+    hostname: celery_worker
+    image: app-image
+    networks:
+      - net_1
+    restart: on-failure
+
+  celery_beat:
+    command: sh -c "wait-for redis:3000 && wait-for drf:8000 -- celery -A base-test beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler"
+    depends_on:
+      - drf
+      - db
+      - redis
+    hostname: celery_beat
+    image: app-image
+    networks:
+      - net_1
+    restart: on-failure
 
 #  react:
 #    build:
@@ -85,9 +99,11 @@ services:
 #      - drf
 
 networks:
-  main:
+  net_1:
+    driver: bridge
 
 volumes:
   postgres_data:
   redis:
 #  react:
+
